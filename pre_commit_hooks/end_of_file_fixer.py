@@ -51,6 +51,7 @@ def fix_file(file_obj: IO[bytes]) -> int:
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
+    parser.add_argument('--exit-zero', action='store_true', help='always exit with zero')
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
 
@@ -63,7 +64,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             if ret_for_file:
                 print(f'Fixing {filename}')
             retv |= ret_for_file
-
+    if args.exit_zero:
+        retv = 0
     return retv
 
 
